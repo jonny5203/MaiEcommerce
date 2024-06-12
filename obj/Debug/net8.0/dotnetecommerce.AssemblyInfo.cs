@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("dotnetecommerce")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5b4a929434ae4d49149bfe7da6abf7d1bb82269d")]
 [assembly: System.Reflection.AssemblyProductAttribute("dotnetecommerce")]
 [assembly: System.Reflection.AssemblyTitleAttribute("dotnetecommerce")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
