@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnetecommerce", "dotnetecommerce.csproj", "{4471B490-A300-4673-8CA6-0125C7E903E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnetecommerce", "MVC\dotnetecommerce.csproj", "{4471B490-A300-4673-8CA6-0125C7E903E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaiCommerce_RazorPages_Temp", "MaiCommerce_RazorPages_Temp\MaiCommerce_RazorPages_Temp.csproj", "{9CF747C6-5909-4224-913A-36B6B94FF19B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaiCommerce.DataAccess", "MaiCommerce.DataAccess\MaiCommerce.DataAccess.csproj", "{263D1B07-3EAD-45BC-9FEE-D951090726A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaiCommerce.Models", "MaiCommerce.Models\MaiCommerce.Models.csproj", "{0DABFB5A-1541-4E98-9785-62986C7CE36C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaiCommerce.Utility", "MaiCommerce.Utility\MaiCommerce.Utility.csproj", "{6EF1C48F-7D0A-431F-A18F-A4A67B3D010B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,22 @@ Global
 		{4471B490-A300-4673-8CA6-0125C7E903E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4471B490-A300-4673-8CA6-0125C7E903E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4471B490-A300-4673-8CA6-0125C7E903E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CF747C6-5909-4224-913A-36B6B94FF19B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CF747C6-5909-4224-913A-36B6B94FF19B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CF747C6-5909-4224-913A-36B6B94FF19B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CF747C6-5909-4224-913A-36B6B94FF19B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{263D1B07-3EAD-45BC-9FEE-D951090726A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{263D1B07-3EAD-45BC-9FEE-D951090726A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{263D1B07-3EAD-45BC-9FEE-D951090726A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{263D1B07-3EAD-45BC-9FEE-D951090726A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DABFB5A-1541-4E98-9785-62986C7CE36C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DABFB5A-1541-4E98-9785-62986C7CE36C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DABFB5A-1541-4E98-9785-62986C7CE36C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DABFB5A-1541-4E98-9785-62986C7CE36C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EF1C48F-7D0A-431F-A18F-A4A67B3D010B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EF1C48F-7D0A-431F-A18F-A4A67B3D010B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EF1C48F-7D0A-431F-A18F-A4A67B3D010B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EF1C48F-7D0A-431F-A18F-A4A67B3D010B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,53 @@
+@page
+@model MaiCommerce_RazorPages_Temp.Pages.Categories.CreateModel
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="col-12 text-center">
+            <h2 class="text-white py-2">Create Category</h2>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <!-- This is a form for Creating categories and put it in the db, with server side validation -->
+        <form method="post" class="row">
+            <div class="border p-3 mt-4">
+                <div class="row pb-2">
+                    <hr />
+                </div>
+                <!-- Sum all Validation errors -->
+                @* <div asp-validation-summary="All"></div> *@
+                <div class="mb-3 row p-2">
+                    <label asp-for="CategoryObj.Name" class="p-0"></label>
+                    <input asp-for="CategoryObj.Name" class="form-control" />
+                    <!-- display validation error text under the input field -->
+                    <span asp-validation-for="CategoryObj.Name" class="text-danger"></span>
+                </div>
+                <div class="mb-3 row p-2">
+                    <label asp-for="CategoryObj.DisplayOrder" class="p-0"></label>
+                    <input asp-for="CategoryObj.DisplayOrder" class="form-control" />
+                    <span asp-validation-for="CategoryObj.DisplayOrder" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 col-md-3">
+                        <button type="submit" class="btn btn-primary form-control">Create</button>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a asp-page="/Categories/Index" class="btn btn-secondary form-control">
+                            Back to List
+                        </a>
+                    </div>
+                </div>
+
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Adding the validation scripts as a partial view of this file -->
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
