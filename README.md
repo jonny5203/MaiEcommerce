@@ -3,3 +3,5 @@
  Then you have to go to the packet manager console in visual studio and write update database, or alternatively you could just open a terminal
  session within the project folder and write dotnet ef database update, if you have Entity Framework CLI installed. Also you may have to update the migration, or create it
  with df ef migrations add ApplicationDBContext --project MaiCommerce.DataAccess --startup MaiCommerce
+
+ NB! Remember to delete the migration folder before migrating
