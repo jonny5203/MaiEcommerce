@@ -1,22 +1,24 @@
-using MaiCommerce.DataAccess.Data;
+using MaiCommerce.DataAccess.Repository.IRepository;
 using MaiCommerce.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
-namespace dotnetecommerce.Controllers
+namespace dotnetecommerce.Areas.Admin.Controllers
 {
+    //Area annotation for the controller to know which area it is in
+    //without it you will either get an exception on the page or a blanc page
+    [Area("Admin")]
     public class CategoryController : Controller
     {
-        private readonly ApplicationDBContext _db;
-        public CategoryController(ApplicationDBContext db)
+        private readonly IUnitOfWork _unitOfWork;
+        public CategoryController(IUnitOfWork unitOfWork)
         {
             //Get the reference from the defined service in program.cs, DI
-            _db = db;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
-            List<Category> objCategoryList = _db.Categories.ToList();
+            List<Category> objCategoryList = _unitOfWork.Category.GetAll().ToList();
             return View(objCategoryList);
         }
 
@@ -40,8 +42,8 @@ namespace dotnetecommerce.Controllers
             if (ModelState.IsValid)
             {
                 //Track value and save it to db
-                _db.Categories.Add(obj);
-                _db.SaveChanges();
+                _unitOfWork.Category.Add(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category created successfully";
                 return RedirectToAction("Index");
             }
@@ -56,7 +58,7 @@ namespace dotnetecommerce.Controllers
                 return NotFound();
             }
 
-            Category? categoryFromDB = _db.Categories.Find(id);
+            Category? categoryFromDB = _unitOfWork.Category.Get(n => n.Id == id);
             //Category? categoryFromDB1 = _db.Categories.FirstOrDefault(u => u.Id == id);
             //Category? categoryFromDB2 = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
 
@@ -79,8 +81,8 @@ namespace dotnetecommerce.Controllers
             if (ModelState.IsValid)
             {
                 //Track value and update the one with the right id, primary key
-                _db.Categories.Update(obj);
-                _db.SaveChanges();
+                _unitOfWork.Category.Update(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category updated successfully";
                 return RedirectToAction("Index");
             }
@@ -95,7 +97,7 @@ namespace dotnetecommerce.Controllers
                 return NotFound();
             }
 
-            Category? categoryFromDB = _db.Categories.Find(id);
+            Category? categoryFromDB = _unitOfWork.Category.Get(n => n.Id == id);
 
             if (categoryFromDB == null)
             {
@@ -110,15 +112,15 @@ namespace dotnetecommerce.Controllers
         public IActionResult DeletePOST(int? id)
         {
             //get row from db if exist
-            Category? obj = _db.Categories.Find(id);
+            Category? obj = _unitOfWork.Category.Get(n => n.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
 
             //remove row from db
-            _db.Categories.Remove(obj);
-            _db.SaveChanges();
+            _unitOfWork.Category.Remove(obj);
+            _unitOfWork.Save();
 
             TempData["success"] = "Category deleted successfully";
             return RedirectToAction("Index");

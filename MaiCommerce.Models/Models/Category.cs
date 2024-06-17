@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MaiCommerce.Models
 {
+    //This is a databse model of a catagory for Entity Framework
+    //The annotation are the different contraint just like in a relational database
     public class Category
     {
         [Key]

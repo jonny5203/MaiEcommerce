@@ -5,6 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MaiCommerce.DataAccess.Repository
 {
+    //This class will act a DI service in program.cs
+    //simply just passing around an object for database handling
+    //with Entity Framework, this will be the base class for all crud and query operations
+    //you notice that all the methods are general purpose(generic), not spesific to one object type
     public class Repository<T> : IRepository<T> where T : class
     {
         private readonly ApplicationDBContext _db;
@@ -13,7 +17,7 @@ namespace MaiCommerce.DataAccess.Repository
         public Repository(ApplicationDBContext db)
         {
             _db = db;
-            this.dbSet = _db.Set<T>();
+            dbSet = _db.Set<T>();
         }
 
         public IEnumerable<T> GetAll()
@@ -24,8 +28,8 @@ namespace MaiCommerce.DataAccess.Repository
 
         public T Get(Expression<Func<T, bool>> filter)
         {
-            IQueryable<T> query = dbSet;
-            query = query.Where(filter);
+            IQueryable<T> query = dbSet
+                .Where(filter);
             return query.FirstOrDefault();
         }
 
