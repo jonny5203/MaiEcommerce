@@ -1,4 +1,5 @@
- A simple E-commercve site built using ASP.Net Core with Entity framework, MSSql and Core Identity.
+# A first-level heading 
+A simple E-commercve site built using ASP.Net Core with Entity framework, MSSql and Core Identity.
  If you want to try it out for now, you have to create your own database server and add the connection string into appsettings.json as "DefaultConnection".
 
 {
