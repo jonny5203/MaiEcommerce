@@ -1,8 +1,12 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MaiCommerce.Models
 {
+    /*
+     * This is the product model that is going to the database
+     */
     public class Product
     {
         [Key]
@@ -38,5 +42,12 @@ namespace MaiCommerce.Models
         [Display(Name = "List Price 100+ pieces")]
         [Range(1, 1000)]
         public double Price100 { get; set; }
+        
+        //this is a foreign key to categories primary key(Id)
+        public int CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
+        public Category Category { get; set;  }
+        
+        public string ImageUrl { get; set; }
     }
 }
