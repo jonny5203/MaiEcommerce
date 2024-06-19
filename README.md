@@ -1,5 +1,12 @@
 # A simple E-commercve site built using ASP.Net Core with Entity framework, MSSql and Core Identity.
 
+### Requirements to run: 
+  1. .Net 8.
+  2. A database server(EF core handles most databases, so you can choose) NB! if you choose a database other than SQL Server you have to install the EF core nuget packages for that.
+  3. Connection string to DB.
+  4. Nuget packages should be installed automatically, but if not you have to install them manually.
+  5. Update the DB with EF core, see below.
+
 If you want to try it out for now, you have to create your own database server and add the connection string into `appsettings.json` as "DefaultConnection".
 ```
 {
@@ -19,11 +26,14 @@ If you want to try it out for now, you have to create your own database server a
  session within the project folder and write dotnet ef database update, if you have Entity Framework CLI installed. Also you may have to update the migration, or create it
  with `df ef migrations add ApplicationDBContext --project MaiCommerce.DataAccess --startup MaiCommerce`
 
- ###New: 
+ ### New: 
  seem like you can just do `dotnet ef database update` or `update-database` in packet manager console, and EF core will autormatically
  update or create the database with the tables and values, but it seems like either you have to do that with all migration in `MaiCommerce.DataAccess.Migrations`
  or you have to delete everything and then create a new migration based on the db context class `ApplicationDBContext`, project should be `MaiCommerce.DataAccess` startup is
  `MaiCommerce`.
+
+ ### NB!:
+ Client side validation is very slow for some reason, have to investigate that.
 
  Description:
  This project is not done, but idea is to create a simple solution for an eccomerce website, with authentication for the users
