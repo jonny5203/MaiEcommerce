@@ -35,7 +35,7 @@ If you want to try it out for now, you have to create your own database server a
  ### NB!:
  Client side validation is very slow for some reason, have to investigate that.
 
- Description:
+ ## Description:
  This project is not done, but idea is to create a simple solution for an eccomerce website, with authentication for the users
  a place where you can sell or resell products with integrated payment system. I am currently using Enity Framework and MS Sql server
  for database handling, and I will use Core Identity as a authentication method, but later also add ways for Single Sign On with 
