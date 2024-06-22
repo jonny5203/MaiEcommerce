@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace MaiCommerce.Models
 {
@@ -46,8 +47,10 @@ namespace MaiCommerce.Models
         //this is a foreign key to categories primary key(Id)
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
+        [ValidateNever]
         public Category Category { get; set;  }
         
+        [ValidateNever]
         public string ImageUrl { get; set; }
     }
 }

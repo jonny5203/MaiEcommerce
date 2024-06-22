@@ -1,5 +1,6 @@
 using MaiCommerce.DataAccess.Repository.IRepository;
 using MaiCommerce.Models;
+using MaiCommerce.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -9,95 +10,126 @@ namespace dotnetecommerce.Areas.Admin.Controllers;
 public class ProductController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IWebHostEnvironment _webHostEnvironment;
 
-    public ProductController(IUnitOfWork unitOfWork)
+    public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
     {
         //Get the reference from the defined service in program.cs, DI
         _unitOfWork = unitOfWork;
+        //instance to access the hosting environment, wwwroot folder
+        _webHostEnvironment = webHostEnvironment;
     }
 
     public IActionResult Index()
     {
-        List<Product> productsList = _unitOfWork.Product.GetAll().ToList();
+        List<Product> productsList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
         return View(productsList);
     }
 
-    public IActionResult Create()
+    public IActionResult Upsert(int? id)
     {
-        //creating an IEnumerable and I'm using SelectListItem as the object
-        //because then I can just create a select in the frontend for my dropdown
-        //using IEnumerable for performance(since it send from server to client) and flexibility.
-        IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category
-            .GetAll()
-            .Select(n => new SelectListItem
-            {
-                Text = n.Name,
-                Value = n.Id.ToString()
-            });
         //Put category list into a temporary storage from controller to view
-        ViewBag.CategoryList = CategoryList;
-        return View();
+        //ViewData["CategoryList"] = CategoryList;
+
+        //Init and pass viewmodel instead for databinding and strongly typed type
+        ProductVM productVm = new()
+        {
+            //creating an IEnumerable and I'm using SelectListItem as the object
+            //because then I can just create a select in the frontend for my dropdown
+            //using IEnumerable for performance(since it send from server to client) and flexibility.
+            CategoryList = _unitOfWork.Category
+                .GetAll()
+                .Select(n => new SelectListItem
+                {
+                    Text = n.Name,
+                    Value = n.Id.ToString()
+                }),
+            Product = new Product()
+        };
+
+        if (id == null || id == 0)
+        {
+            //create
+            return View(productVm);
+        }
+        else
+        {
+            //update
+            productVm.Product = _unitOfWork.Product.Get(n => n.Id == id);
+            return View(productVm);
+        }
     }
 
     //Receiving the input(category obj) from client(), 
     //in the create view form and add it to database
     [HttpPost]
-    public IActionResult Create(Product obj)
+    public IActionResult Upsert(ProductVM productVm, IFormFile? file)
     {
-        if (obj.Title == obj.Description)
-        {
-            ModelState.AddModelError("name", "The DisplayOrder cannot exactly match the Name.");
-        }
-
         //Check if the value is validated from the 
         //based on object notation inside category model
         if (ModelState.IsValid)
         {
-            //Track value and save it to db
-            _unitOfWork.Product.Add(obj);
+            //getting the wwwroot path and check if exist
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            if (file != null)
+            {
+                //create a file with a GUID as name, and with the same file extention as
+                //the file uploaded. Then also combine the wwwRootPath, with the folder path
+                //within wwwroot that the program is going to save into
+                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                
+                //Because I'm developing on linux, the path is /, but on windows the path is \
+                string productPath = Path.Combine(wwwRootPath, @"images/product");
+
+                if (!string.IsNullOrEmpty(productVm.Product.ImageUrl))
+                {
+                    //delete the old image
+                    var oldImagePath = Path.Combine(wwwRootPath, productVm.Product.ImageUrl.TrimStart('/'));
+
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+                
+                //Automatic disposable file for saving image to folder
+                using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+                
+                //write the path to the image to the model
+                productVm.Product.ImageUrl = @"/images/product/" + fileName;
+            }
+
+            if (productVm.Product.Id == 0)
+            {
+                //Track value and save the product to db
+                _unitOfWork.Product.Add(productVm.Product);
+            }
+            else
+            {
+                _unitOfWork.Product.Update(productVm.Product);
+            }
+            
             _unitOfWork.Save();
             TempData["success"] = "Product created successfully";
             return RedirectToAction("Index");
         }
-
-        return View();
-    }
-
-    public IActionResult Edit(int? id)
-    {
-        if (id == null || id == 0)
+        else
         {
-            return NotFound();
+            //fixing the exception where the dropdown will be
+            //empty if something refreshes
+            productVm.CategoryList = _unitOfWork.Category
+                .GetAll()
+                .Select(n => new SelectListItem
+                {
+                    Text = n.Name,
+                    Value = n.Id.ToString()
+                });
+
+            return View(productVm);
         }
-
-        Product? categoryFromDB = _unitOfWork.Product.Get(n => n.Id == id);
-        //Category? categoryFromDB1 = _db.Categories.FirstOrDefault(u => u.Id == id);
-        //Category? categoryFromDB2 = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
-
-        if (categoryFromDB == null)
-        {
-            return NotFound();
-        }
-
-        return View(categoryFromDB);
-    }
-
-    //Update values in an existing row in the database
-    [HttpPost]
-    public IActionResult Edit(Product obj)
-    {
-        //Check if the value is validated from the 
-        //based on object notation inside category model
-        if (ModelState.IsValid)
-        {
-            //Track value and update the one with the right id, primary key
-            _unitOfWork.Product.Update(obj);
-            _unitOfWork.Save();
-            TempData["success"] = "Product updated successfully";
-            return RedirectToAction("Index");
-        }
-
-        return View();
     }
 
     public IActionResult Delete(int? id)
