@@ -1,5 +1,15 @@
 # A simple E-commercve site built using ASP.Net Core with Entity framework, MSSql and Core Identity.
 
+### Frameworks and Libraries used:
+  1. Asp.net core MVC
+  2. Entity Framework core
+  3. Microsoft Sql Server
+  4. TinyMCE
+  5. CloudTable
+  6. Bootstrap
+  7. Jquery and Ajax
+  8. SweetAlert2
+
 ### Requirements to run: 
   1. .Net 8.
   2. A database server(EF core handles most databases, so you can choose) NB! if you choose a database other than SQL Server you have to install the EF core nuget packages for that.
