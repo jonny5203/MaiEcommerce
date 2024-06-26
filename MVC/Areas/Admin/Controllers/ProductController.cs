@@ -131,40 +131,43 @@ public class ProductController : Controller
             return View(productVm);
         }
     }
+    
+    //Creating api endpoints inside product controller navigatiion route
+    #region API CALLS
+    
+    //API endpoint for getting the product list as a json object
+    [HttpGet]
+    public IActionResult GetAll()
+    {
+        List<Product> objProduct = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
 
+        return Json(new { data = objProduct });
+    }
+    
+    [HttpDelete]
     public IActionResult Delete(int? id)
     {
-        if (id == null || id == 0)
+        Product productToBeDeleted = _unitOfWork.Product.Get(n => n.Id == id);
+        if (productToBeDeleted == null)
         {
-            return NotFound();
+            return Json(new { success = false, message = "Error while deleting" });
         }
-
-        Product? productFromDB = _unitOfWork.Product.Get(n => n.Id == id);
-
-        if (productFromDB == null)
+        
+        var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, productToBeDeleted.ImageUrl.TrimStart('/'));
+        
+        // Delete the image in wwwroot/image folder
+        // TODO: try catch statement to catch error if something were to happen other than that file exist
+        if (System.IO.File.Exists(oldImagePath))
         {
-            return NotFound();
+            System.IO.File.Delete(oldImagePath);
         }
-
-        return View(productFromDB);
-    }
-
-    //Delete an entry in the database based on the Id in param
-    [HttpPost, ActionName("Delete")]
-    public IActionResult DeletePOST(int? id)
-    {
-        //get row from db if exist
-        Product? obj = _unitOfWork.Product.Get(n => n.Id == id);
-        if (obj == null)
-        {
-            return NotFound();
-        }
-
-        //remove row from db
-        _unitOfWork.Product.Remove(obj);
+        
+        //remove entry from db
+        _unitOfWork.Product.Remove(productToBeDeleted);
         _unitOfWork.Save();
 
-        TempData["success"] = "Product deleted successfully";
-        return RedirectToAction("Index");
+        return Json(new { success = true, message = "Deleted Successfully" });
     }
+    
+    #endregion
 }

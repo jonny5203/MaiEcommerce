@@ -2,9 +2,9 @@
 
 
 <div class="card shadow border-0 mt-4">
-    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+    <div class="card-header bg-primary bg-gradient text-light py-4">
         <div class="col-12 text-center">
-            <h2 class="text-primary py-2">Product List</h2>
+            <h2 class="text-white py-2">Product List</h2>
         </div>
     </div>
     <div class="card-body p-4">
@@ -17,11 +17,13 @@
                 </a>
             </div>
         </div>
-        <!-- Display data from the model(List) -->
-        <table class="table table-bordered table-striped">
-            <!-- TODO: Maybe also generate this and the values of the columns in a for loop
-            also, maybe just use displayname for every field for consistency
-            -->
+        <!-- 
+        Creating an API call to /admin/product/getall to get all product
+        in a json obj format, created by the controller. Using something called CloudTable
+        to generate a nice looking table view, this will automatically be populated by product.js, by the 
+        id name "tblData".
+        -->
+        <table id="tblData" class="table table-bordered table-striped" style="width: 100%">
             <thead>
             <tr>
                 <th>
@@ -31,52 +33,24 @@
                     ISBN
                 </th>
                 <th>
-                    Author
+                    Price
                 </th>
                 <th>
-                    Price
+                    Author
                 </th>
                 <th>
                     Category
                 </th>
+                <th>
+                    
+                </th>
             </tr>
             </thead>
-            <tbody>
-            <!-- TODO: Maybe create a filter system, or order system to make it easier for the user organize the data -->
-            <!-- Display each object in their respective row, and the obj -->
-            @foreach (var obj in Model.OrderBy(n => n.Title))
-            {
-                <tr>
-                    <td>
-                        @obj.Title
-                    </td>
-                    <td>
-                        @obj.ISBN
-                    </td>
-                    <td>
-                        @obj.Author
-                    </td>
-                    <td>
-                        @obj.ListPrice
-                    </td>
-                    <td>
-                        @obj.Category.Name
-                    </td>
-                    <td>
-                        <div class="w-75 btn-group" role="group">
-                            <a asp-controller="Product" asp-action="Upsert" asp-route-id="@obj.Id"
-                               class="btn btn-primary mx-2">
-                                <i class="bi bi-pencil-square"></i> Edit
-                            </a>
-                            <a asp-controller="Product" asp-action="Delete" asp-route-id="@obj.Id"
-                               class="btn btn-danger mx-2">
-                                <i class="bi bi-trash-fill"></i> Delete
-                            </a>
-                        </div>
-                    </td>
-                </tr>
-            }
-            </tbody>
         </table>
     </div>
 </div>
+
+@section Scripts
+{
+    <script src="~/js/product.js"></script>
+}

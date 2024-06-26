@@ -1,10 +1,14 @@
 using MaiCommerce.Models;
+using MaiCommerce.Models.IdentityModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 //Standard Configuration for working with Entity Framework
+//TODO: maybe thinking of creating another context only for ASP.NET Core Identity later
 namespace MaiCommerce.DataAccess.Data
 {
-    public class ApplicationDBContext : DbContext
+    public class ApplicationDBContext : IdentityDbContext<IdentityUser>
     {
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
         {
@@ -13,9 +17,12 @@ namespace MaiCommerce.DataAccess.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+            
             modelBuilder.Entity<Category>().HasData(
                 new Category{ Id = 1, Name = "Action", DisplayOrder = 1},
                 new Category{ Id = 2, Name = "SciFi", DisplayOrder = 2},
