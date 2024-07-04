@@ -4,11 +4,12 @@
   1. Asp.net core MVC
   2. Entity Framework core
   3. Microsoft Sql Server
-  4. TinyMCE
-  5. CloudTable
-  6. Bootstrap
-  7. Jquery and Ajax
-  8. SweetAlert2
+  4. Asp.net core Identity
+  5. TinyMCE
+  6. CloudTable
+  7. Bootstrap
+  8. Jquery and Ajax
+  9. SweetAlert2
 
 ### Requirements to run: 
   1. .Net 8.
@@ -40,10 +41,11 @@ If you want to try it out for now, you have to create your own database server a
  seem like you can just do `dotnet ef database update` or `update-database` in packet manager console, and EF core will autormatically
  update or create the database with the tables and values, but it seems like either you have to do that with all migration in `MaiCommerce.DataAccess.Migrations`
  or you have to delete everything and then create a new migration based on the db context class `ApplicationDBContext`, project should be `MaiCommerce.DataAccess` startup is
- `MaiCommerce`.
+ `MaiCommerce`. ### you may have to update each migrations sequentually, the migrations is located at `MaiCommerce.DataAccess/Migrations`
 
  ### NB!:
- Client side validation is very slow for some reason, have to investigate that.
+ I am using Linux as my development environment, so there is some places where I have to provide path for file saving, those path has to be replace with \\ instead of /. You find them in the productcontroller
+ inside `MVC` or `MaiCommerce/Areas/Admin/Controllers/ProductController`
 
  ## Description:
  This project is not done, but idea is to create a simple solution for an eccomerce website, with authentication for the users
