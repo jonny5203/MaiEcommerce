@@ -55,3 +55,5 @@ If you want to try it out for now, you have to create your own database server a
  page, and for the user and seller to analyze for themselves. The seller could be a company or it could be a private person. It should also
  have order details as well as status on order. You should be able to log in as customer, company(seller) or admin. I am planning on using
  stripe as my payment service.
+
+ ## Full Description Coming Soon ...
