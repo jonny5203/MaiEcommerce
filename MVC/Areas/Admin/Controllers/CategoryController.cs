@@ -1,5 +1,7 @@
 using MaiCommerce.DataAccess.Repository.IRepository;
 using MaiCommerce.Models;
+using MaiCommerce.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace dotnetecommerce.Areas.Admin.Controllers
@@ -7,6 +9,8 @@ namespace dotnetecommerce.Areas.Admin.Controllers
     //Area annotation for the controller to know which area it is in
     //without it you will either get an exception on the page or a blanc page
     [Area("Admin")]
+    //only admin accounts can access this controller
+    [Authorize(Roles = SD.Role_Admin)]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

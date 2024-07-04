@@ -1,12 +1,15 @@
 using MaiCommerce.DataAccess.Repository.IRepository;
 using MaiCommerce.Models;
 using MaiCommerce.Models.ViewModels;
+using MaiCommerce.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace dotnetecommerce.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize(Roles = SD.Role_Admin)]
 public class ProductController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;
