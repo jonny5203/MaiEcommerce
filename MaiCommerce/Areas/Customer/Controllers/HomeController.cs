@@ -56,13 +56,13 @@ public class HomeController : Controller
         if (cartFromDB != null)
         {
             //Shopping cart exist
-            shoppingCart.Product = cartFromDB.Product;
+            cartFromDB.Count += shoppingCart.Count;
+            _unitOfWork.ShoppingCart.Update(cartFromDB);
         }
         else
         {
             //add cart record
             _unitOfWork.ShoppingCart.Add(shoppingCart);
-
         }
         
         _unitOfWork.Save();
