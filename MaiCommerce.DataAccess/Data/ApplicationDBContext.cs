@@ -1,4 +1,4 @@
-using MaiCommerce.Models;
+using MaiCommerce.Models.DataModels;
 using MaiCommerce.Models.IdentityModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -14,20 +14,34 @@ namespace MaiCommerce.DataAccess.Data
         {
             
         }
-
+        
+        // This is a representation of the tables that you creates with ef core in the database
+        // Automatically creates the table when you update the database with the newly created migration
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        // TODO: maybe create another db context just for Identity handling
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
+        // Is called when ef core is creating the table based on the model above
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             
+            // Telling ef core to seed the table with data when creating them
             modelBuilder.Entity<Category>().HasData(
                 new Category{ Id = 1, Name = "Action", DisplayOrder = 1},
                 new Category{ Id = 2, Name = "SciFi", DisplayOrder = 2},
                 new Category{ Id = 3, Name = "History", DisplayOrder = 3}
             );
+            
+            modelBuilder.Entity<Company>().HasData(
+                new Company{ Id = 1, Name = "Sandefjord Kommune", StreetAddress = "Sandefjordvegen 1", City = "Sandefjord", State = "Vestfold", PostalCode = "4444", PhoneNumber = "123456789"},
+                new Company{ Id = 2, Name = "Tech Solutions", StreetAddress = "123 Tech St", City = "Dallas", State = "Texas", PostalCode = "28475", PhoneNumber = "4829048520"},
+                new Company{ Id = 3, Name = "BooksSale", StreetAddress = "Book Street 2", City = "Las Vegas", State = "Vestfold", PostalCode = "4444", PhoneNumber = "123456789"}
+            );
+            
             modelBuilder.Entity<Product>().HasData(
                 new Product { 
                     Id = 1, 

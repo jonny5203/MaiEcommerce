@@ -1,6 +1,6 @@
 using MaiCommerce.DataAccess.Data;
 using MaiCommerce.DataAccess.Repository.IRepository;
-using MaiCommerce.Models;
+using MaiCommerce.Models.DataModels;
 
 namespace MaiCommerce.DataAccess.Repository;
 

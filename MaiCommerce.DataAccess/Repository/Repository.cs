@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace MaiCommerce.DataAccess.Repository
 {
     //This class will act a DI service in program.cs
-    //simply just passing around an object for database handling
+    //simply just passing around an object for database handling, as well as defining CRUD operations
     //with Entity Framework, this will be the base class for all crud and query operations
     //you notice that all the methods are general purpose(generic), not spesific to one object type
     public class Repository<T> : IRepository<T> where T : class
@@ -41,7 +41,7 @@ namespace MaiCommerce.DataAccess.Repository
                 //String format ex. "Category, Product", this is because of
                 //EF lazy loading(dbset doesn't know about category), it won't load all the foreign key navigation unless
                 //explicitly told so, not doing so will result in a null obj for the
-                //obj that the foreign key points to.
+                //obj that the foreign key points to, the reference object in the model classes
                 foreach (var includeProp in includeProperties
                              .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
@@ -53,6 +53,7 @@ namespace MaiCommerce.DataAccess.Repository
 
         public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
+            // A query obect to quyery the database
             IQueryable<T> query = dbSet
                 .Where(filter);
             
@@ -61,6 +62,8 @@ namespace MaiCommerce.DataAccess.Repository
                 foreach (var includeProp in includeProperties
                              .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
+                    // A commaseparated string list is passed I check if it's empty, split the valuee
+                    // loop through every value, and call include on every one of them
                     query = query.Include(includeProp);
                 }
             }

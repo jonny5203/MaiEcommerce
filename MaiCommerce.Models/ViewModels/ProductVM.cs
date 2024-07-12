@@ -1,3 +1,4 @@
+using MaiCommerce.Models.DataModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 

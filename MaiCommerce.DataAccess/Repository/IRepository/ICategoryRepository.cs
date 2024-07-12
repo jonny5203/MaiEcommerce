@@ -1,4 +1,4 @@
-using MaiCommerce.Models;
+using MaiCommerce.Models.DataModels;
 
 namespace MaiCommerce.DataAccess.Repository.IRepository;
 
