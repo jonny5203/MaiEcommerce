@@ -13,6 +13,8 @@ public class UnitOfWork : IUnitOfWork
     public ICompanyRepository Company { get; private set; }
     public IShoppingCartRepository ShoppingCart { get; private set; }
     public IApplicationUserRepository ApplicationUser { get; private set; }
+    public IOrderDetailRepository OrderDetail { get; private set; }
+    public IOrderHeaderRepository OrderHeader { get; private set; }
     
     //Request custom db context and creating a categoryrepository with the context
     //for future flexibility, and then inject(DI) the context to all the compositions(fields)
@@ -24,6 +26,8 @@ public class UnitOfWork : IUnitOfWork
         Company = new CompanyRepository(_db);
         ShoppingCart = new ShoppingCartRepository(_db);
         ApplicationUser = new ApplicationUserRepository(_db);
+        OrderDetail = new OrderDetailRepository(_db);
+        OrderHeader = new OrderHeaderRepository(_db);
     }
 
     //have it's own Save function so that it can work

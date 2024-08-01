@@ -5,6 +5,7 @@ using MaiCommerce.Utility;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 //Register custom database context obj
-builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<ApplicationDBContext>(
+    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Configure the Stripe env to a StripeSettings object, basically injecting the values in
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
 //Register default use for ASP.NET Core Identity and also adding db context for it
 //and also handles roles when handling Identity, different type of roles and identity obj
@@ -47,6 +52,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+// Assign the Stripe SecretKey value in env(appsettings) to StripeConfiguration API key
+// so that the nuget package can connect to the stripe backend service
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 
 app.UseRouting();
 

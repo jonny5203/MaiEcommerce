@@ -52,19 +52,22 @@ public class HomeController : Controller
         
         ShoppingCart cartFromDB = _unitOfWork.ShoppingCart.Get(n => n.ApplicationUserId == userId 
                                                                     && n.ProductId == shoppingCart.ProductId);
-
         if (cartFromDB != null)
         {
-            //Shopping cart exist
+            //shopping cart exist
+            //this line is still being tracked by ef core and saved to the database
+            //event though the Add function wasn't called, I guess it tracks what is happening with
+            //the reference automatically
             cartFromDB.Count += shoppingCart.Count;
             _unitOfWork.ShoppingCart.Update(cartFromDB);
         }
         else
         {
-            //add cart record
+            //add to cart
             _unitOfWork.ShoppingCart.Add(shoppingCart);
         }
         
+        TempData["success"] = "Cart Updated Successfully";
         _unitOfWork.Save();
         
         return RedirectToAction(nameof(Index));

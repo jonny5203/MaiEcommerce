@@ -27,9 +27,13 @@ namespace MaiCommerce.DataAccess.Repository
                 .Include(n => n.CategoryId);
         }
         
-        public IEnumerable<T> GetAll(string? includeProperties = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
             
             //Check and if there is a Moodel name and then include that mode
             //in the product, the navigation is preloaded in the constructor
@@ -51,11 +55,23 @@ namespace MaiCommerce.DataAccess.Repository
             return query.ToList();
         }
 
-        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracking = false)
         {
-            // A query obect to quyery the database
-            IQueryable<T> query = dbSet
-                .Where(filter);
+            IQueryable<T> query;
+            if (tracking)
+            {
+                // A query obect to quyery the database
+                query = dbSet
+                    .Where(filter);
+                
+            }
+            else
+            {
+                // A query obect to quyery the database and prevent that the
+                // reference object return from the query
+                query = dbSet.AsNoTracking()
+                    .Where(filter);
+            }
             
             if (!string.IsNullOrEmpty(includeProperties))
             {
@@ -67,6 +83,7 @@ namespace MaiCommerce.DataAccess.Repository
                     query = query.Include(includeProp);
                 }
             }
+            
             return query.FirstOrDefault();
         }
 
