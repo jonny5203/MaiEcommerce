@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace MaiCommerce.Models.DataModels;
 
+// This is the status and information about the order itself
+// as well as the user connected with this order
 public class OrderHeader
 {
     public int Id { get; set; }

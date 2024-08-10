@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace MaiCommerce.Models.DataModels;
 
-// this is the actual details about the order, and contains the  
+// this is the actual details about the order, which product, total price and count
 public class OrderDetail
 {
     public int Id { get; set; }

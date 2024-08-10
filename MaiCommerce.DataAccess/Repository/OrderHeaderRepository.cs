@@ -23,11 +23,12 @@ public class OrderHeaderRepository : Repository<OrderHeader>, IOrderHeaderReposi
     {
         _db.OrderHeaders.Update(obj);
     }
-
+    
+    // Query the status with the id value from the db instance, then change the status with the parameter value
     public void UpdateStatus(int id, string orderStatus, string? paymentStatus = null)
     {
         var orderFromDb = _db.OrderHeaders.FirstOrDefault(n => n.Id == id);
-        if (orderFromDb == null)
+        if (orderFromDb != null)
         {
             orderFromDb.OrderStatus = orderStatus;
             if (!string.IsNullOrEmpty(paymentStatus))
@@ -46,7 +47,7 @@ public class OrderHeaderRepository : Repository<OrderHeader>, IOrderHeaderReposi
         }
         if (!string.IsNullOrEmpty(paymentIntentId))
         {
-            orderFromDb.SessionId = sessionId;
+            orderFromDb.PaymentIntentId = paymentIntentId;
             orderFromDb.PaymentDate = DateTime.Now;
             
         }

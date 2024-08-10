@@ -1,0 +1,338 @@
+@model OrderVM
+
+<form method="post" xmlns="http://www.w3.org/1999/html">
+    <input asp-for="orderHeader.Id" hidden />
+    <br/>
+    <div class="container">
+        <div class="card">
+            <div class="card-header bg-dark text-light ml-0">
+                <div class="container row">
+                    <div class="col-12 d-none d-md-block col-md-6 pb-1">
+                        <i class="fas fa-shopping-cart"></i> &nbsp; Order Summary
+                    </div>
+                    <div class="col-12 col-md-4 offset-md-2 text-right">
+                        <a asp-action="Index" class="btn btn-outline-info form-control btn-sm">Back to Orders</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="container rounded p-2">
+                    <div class="row">
+                        <div class="col-12 col-lg-6 pb-4">
+
+                            <div class="row">
+                                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="text-primary">PickUp Details:</span>
+                                </h4>
+                            </div>
+
+                            <div class="row my-1">
+                                <div class="col-3">Name</div>
+                                <div class="col-9">
+                                    <!-- Check for user role to see if admin, if they are admin they have write access, if not they will only have read -->
+                                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                                    {
+                                        <input asp-for="orderHeader.Name" type="text" class="form-control"/>
+                                        <span asp-validation-for="orderHeader.Name" class="text-danger"></span>
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="orderHeader.Name" readonly type="text" class="form-control"/>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row my-1">
+                                <div class="col-3">Phone</div>
+                                <div class="col-9">
+                                    <!-- Check for user role to see if admin, if they are admin they have write access, if not they will only have read -->
+                                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                                    {
+                                        <input asp-for="orderHeader.PhoneNumber" type="text" class="form-control"/>
+                                        <span asp-validation-for="orderHeader.PhoneNumber" class="text-danger"></span>
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="orderHeader.PhoneNumber" readonly type="text" class="form-control"/>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row my-1">
+                                <div class="col-3">Address</div>
+                                <div class="col-9">
+                                    <!-- Check for user role to see if admin, if they are admin they have write access, if not they will only have read -->
+                                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                                    {
+                                        <input asp-for="orderHeader.StreetAddress" type="text" class="form-control"/>
+                                        <span asp-validation-for="orderHeader.StreetAddress" class="text-danger"></span>
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="orderHeader.StreetAddress" readonly type="text" class="form-control"/>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row my-1">
+                                <div class="col-3">City</div>
+                                <div class="col-9">
+                                    <!-- Check for user role to see if admin, if they are admin they have write access, if not they will only have read -->
+                                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                                    {
+                                        <input asp-for="orderHeader.City" type="text" class="form-control"/>
+                                        <span asp-validation-for="orderHeader.City" class="text-danger"></span>
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="orderHeader.City" readonly type="text" class="form-control"/>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row my-1">
+                                <div class="col-3">State</div>
+                                <div class="col-9">
+                                    <!-- Check for user role to see if admin, if they are admin they have write access, if not they will only have read -->
+                                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                                    {
+                                        <input asp-for="orderHeader.State" type="text" class="form-control"/>
+                                        <span asp-validation-for="orderHeader.State" class="text-danger"></span>
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="orderHeader.State" readonly type="text" class="form-control"/>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row my-1">
+                                <div class="col-3">Postal Code</div>
+                                <div class="col-9">
+                                    <!-- Check for user role to see if admin, if they are admin they have write access, if not they will only have read -->
+                                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                                    {
+                                        <input asp-for="orderHeader.PostalCode" type="text" class="form-control"/>
+                                        <span asp-validation-for="orderHeader.PostalCode" class="text-danger"></span>
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="orderHeader.Name" readonly type="text" class="form-control"/>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row my-1">
+                                <div class="col-3">Email</div>
+                                <div class="col-9">
+                                    <input asp-for="orderHeader.ApplicationUser.Email" readonly type="text" class="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="row my-1">
+                                <div class="col-3">Order Date</div>
+                                <div class="col-9">
+                                    <input value="@Model.orderHeader.OrderDate.ToShortDateString()" readonly type="text" class="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="row my-1">
+                                <div class="col-3">Carrier</div>
+                                <div class="col-9">
+                                    <!-- Check for user role to see if admin, if they are admin they have write access, if not they will only have read -->
+                                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                                    {
+                                        <input asp-for="orderHeader.Carrier" id="carrier" type="text" class="form-control"/>
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="orderHeader.Carrier" readonly type="text" class="form-control"/>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row my-1">
+                                <div class="col-3">Tracking</div>
+                                <div class="col-9">
+                                    <!-- Check for user role to see if admin, if they are admin they have write access, if not they will only have read -->
+                                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                                    {
+                                        <input asp-for="orderHeader.TrackingNumber" id="trackingNumber" type="text" class="form-control"/>
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="orderHeader.TrackingNumber" readonly type="text" class="form-control"/>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row my-1">
+                                <div class="col-3">Shipping Date</div>
+                                <div class="col-9">
+                                    <input value="@Model.orderHeader.ShippingDate.ToShortDateString()" readonly type="text" class="form-control"/>
+                                </div>
+                            </div>
+
+                            @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                            {
+                                <div class="row my-1">
+                                    <div class="col-3">Session ID</div>
+                                    <div class="col-9">
+                                        <input asp-for="orderHeader.SessionId" readonly type="text" class="form-control"/>
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">Payment Intent ID</div>
+                                    <div class="col-9">
+                                        <input asp-for="orderHeader.PaymentIntentId" readonly type="text" class="form-control"/>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="row my-1">
+                                <!-- 
+                                If payment is not made, show the due date, else show when it was paid,
+                                this is checking if session id exist in the db, as if it was paid with Stripe, it would have a session id saved
+                                -->
+                                @if (Model.orderHeader.SessionId == null)
+                                {
+                                    <div class="col-3">Payment Due Date</div>
+                                    <div class="col-9">
+                                        <input value="@Model.orderHeader.PaymentDueDate.ToShortDateString()" readonly type="text" class="form-control"/>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-3">Payment Date</div>
+                                    <div class="col-9">
+                                        <input value="@Model.orderHeader.PaymentDate.ToShortDateString()" readonly type="text" class="form-control"/>
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="row my-1">
+                                <div class="col-3">Payment Status</div>
+                                <div class="col-9">
+                                    <input asp-for="orderHeader.PaymentStatus" readonly type="text" class="form-control"/>
+                                </div>
+                            </div>
+
+                            <!-- Only display button if admin -->
+                            @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Admin))
+                            {
+                                // Submit form to a custom action instead of details
+                                <button type="submit" asp-action="UpdateOrderDetail" class="btn btn-warning form-control my-1">Update Order Details</button>
+                            }
+
+                        </div>
+
+                        <div class="col-12 col-lg-5 offset-lg-1">
+                            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-primary">Order Summary</span>
+                            </h4>
+                            <label class="btn btn-outline-primary form-control my-2">Order Status - @Model.orderHeader.OrderStatus</label>
+
+                            <ul class="list-group mb-3">
+                                <!--
+                                Loop through to create each detail row 
+                                -->
+                                @foreach (var detail in Model.orderDetails)
+                                {
+                                    <li class="list-group-item d-flex justify-content-between p-2">
+                                        <div class="row container">
+                                            <div class="col-8">
+
+                                                <h6 class="my-0 text-primary">@detail.Product.Title</h6>
+                                                <small class="text-muted">Price : @detail.Price.ToString("C")</small><br/>
+                                                <small class="text-muted">Quantity : @detail.Count</small>
+                                            </div>
+                                            <div class="col-4 text-end">
+                                                <p class="text-primary">@((detail.Count * detail.Price).ToString("C"))</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+
+                                <li class="list-group-item bg-primary">
+                                    <div class="row container">
+                                        <div class="col-6">
+                                            <h5 class="text-white">TOTAL </h5>
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            <h5 class="text-white">@Model.orderHeader.OrderTotal.ToString("C")</h5>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            
+                            <!--
+                            toggle pay button for company user if the order have been shipped but payment
+                            haven't been made
+                            -->
+                            @if (Model.orderHeader.PaymentStatus == SD.Payment_Status_Delayed_Payment
+                                 && Model.orderHeader.OrderStatus == SD.Status_Shipped)
+                            {
+                                <button asp-action="Details" type="submit" class="btn btn-success form-control my-1" value="Pay Now">Pay Now</button>
+                            }
+                            <!--
+                            Only show this for admin and employees
+                            -->
+                            @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                            {
+                                <!-- Show different buttons for different status in the model object -->
+                                @if (Model.orderHeader.OrderStatus == SD.Status_Approved)
+                                {
+                                    <button type="submit" asp-action="StartProcessing"
+                                            class="btn btn-primary form-control my-1">Start Processing</button>
+                                }
+                                @if (Model.orderHeader.OrderStatus == SD.Status_In_Process)
+                                {
+                                    <button type="submit" asp-action="ShipOrder" onclick="return validateInput()"
+                                            class="btn btn-primary form-control my-1">Ship Order</button>
+                                }
+                                @if (Model.orderHeader.OrderStatus != SD.Status_Refunded &&
+                                     Model.orderHeader.OrderStatus != SD.Status_Cancelled &&
+                                     Model.orderHeader.OrderStatus != SD.Status_Shipped)
+                                {
+                                    <button asp-action="CancelOrder" type="submit" class="btn btn-danger form-control my-1">Cancel Order</button>
+                                }
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial"/>
+    <script>
+        function validateInput()
+        {
+            if (document.getElementById("trackingNumber").value == "")
+            {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please enter tracking number!'
+                })
+                return false;
+            }
+            
+            if (document.getElementById("carrier").value == "")
+            {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please enter tracking number!'
+                })
+                return false;
+            }
+            
+            return true;
+        }
+    </script>
+}
